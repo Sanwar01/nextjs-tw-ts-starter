@@ -1,5 +1,5 @@
 import { supabase } from '@/utils/supabaseClient';
-import type { NextPage } from 'next';
+import type { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Router from 'next/router';
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
 
 export default Home;
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: NextPageContext) {
   const profile = supabase.auth.user();
 
   if (profile) {
