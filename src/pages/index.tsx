@@ -1,7 +1,10 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.scss'
+import { supabase } from '@/utils/supabaseClient';
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import Router from 'next/router';
+import { useEffect } from 'react';
+import styles from '../styles/Home.module.scss';
 
 const Home: NextPage = () => {
   return (
@@ -66,7 +69,27 @@ const Home: NextPage = () => {
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
+
+export async function getServerSideProps(context) {
+  const profile = supabase.auth.user();
+
+  if (profile) {
+    const user = profile;
+    return {
+      props: {
+        user,
+      },
+    };
+  }
+
+  return {
+    redirect: {
+      permanent: false,
+      destination: '/signin',
+    },
+  };
+}
