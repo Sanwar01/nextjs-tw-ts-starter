@@ -39,6 +39,14 @@ yarn dev
 - [`public`](./public) — Static assets such as robots.txt, images, and favicon.<br>
 - [`src`](./src) — Application source code, including pages, components, styles, utils, libs etc.
 
+## Generate secret key
+
+Run this in terminal
+
+```
+node -e "console.log(crypto.randomBytes(32).toString('hex'))"
+```
+
 ### Scripts
 
 - `yarn dev` — Starts the application in development mode at `http://localhost:3000`.
