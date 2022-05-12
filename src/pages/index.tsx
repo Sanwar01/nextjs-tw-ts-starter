@@ -1,3 +1,4 @@
+import { useUser } from '@/context/user';
 import { supabase } from '@/utils/supabaseClient';
 import type { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
@@ -7,6 +8,8 @@ import { useEffect } from 'react';
 import styles from '../styles/Home.module.scss';
 
 const Home: NextPage = () => {
+  const { user } = useUser();
+  console.log(user);
   return (
     <div className={styles.container}>
       <Head>
@@ -74,22 +77,22 @@ const Home: NextPage = () => {
 
 export default Home;
 
-export async function getServerSideProps(context: NextPageContext) {
-  const profile = supabase.auth.user();
+// export async function getServerSideProps(context: NextPageContext) {
+//   const profile = supabase.auth.user();
 
-  if (profile) {
-    const user = profile;
-    return {
-      props: {
-        user,
-      },
-    };
-  }
+//   if (profile) {
+//     const user = profile;
+//     return {
+//       props: {
+//         user,
+//       },
+//     };
+//   }
 
-  return {
-    redirect: {
-      permanent: false,
-      destination: '/signin',
-    },
-  };
-}
+//   return {
+//     redirect: {
+//       permanent: false,
+//       destination: '/signin',
+//     },
+//   };
+// }
