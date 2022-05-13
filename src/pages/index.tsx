@@ -3,12 +3,13 @@ import { supabase } from '@/utils/supabaseClient';
 import type { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import Router from 'next/router';
 import { useEffect } from 'react';
 import styles from '../styles/Home.module.scss';
 
 const Home: NextPage = () => {
-  const { user } = useUser();
+  const { user, logout } = useUser();
   console.log(user);
   return (
     <div className={styles.container}>
@@ -19,6 +20,22 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+        <div className="flex flex-col items-end w-full">
+          {user ? (
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+              onClick={logout}
+            >
+              Logout
+            </button>
+          ) : (
+            <Link href="/login">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2">
+                Login
+              </button>
+            </Link>
+          )}
+        </div>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
