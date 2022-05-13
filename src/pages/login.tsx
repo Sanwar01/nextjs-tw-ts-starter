@@ -1,10 +1,12 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useRouter } from 'next/router';
 import { supabase } from '@/utils/supabaseClient';
+import { useUser } from '@/context/user';
 
 const SignIn = () => {
   const router = useRouter();
+  const { login } = useUser();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -23,23 +25,6 @@ const SignIn = () => {
     }
   };
 
-  const handleSignInWithGitHub: MouseEventHandler = async (e) => {
-    e.preventDefault();
-
-    const { error } = await supabase.auth.signIn(
-      {
-        provider: 'github',
-      },
-      {
-        redirectTo: 'http://localhost:3000/callback/',
-      }
-    );
-
-    if (error) {
-      alert(JSON.stringify(error));
-    }
-  };
-
   return (
     <div className="h-screen flex items-center justify-center bg-gray-800">
       <div className="max-w-lg w-full">
@@ -50,7 +35,7 @@ const SignIn = () => {
         <div className="flex flex-col p-6">
           <button
             className="text-lg text-white font-semibold bg-blue-500 py-3 px-6 rounded-md focus:outline-none focus:ring-2"
-            onClick={handleSignInWithGitHub}
+            onClick={login}
           >
             Sign In with GitHub
           </button>
